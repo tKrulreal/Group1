@@ -4,7 +4,7 @@
 {% block content %}
 <div class="admin-head">
     <h1>Quản lý danh sách đơn vị</h1>
-    <a class="btn" href="{{ url_for('admin_create_unit') }}">+ Thêm đơn vị</a>
+    <a class="btn" href="{{ url_for('create_unit') }}">+ Thêm đơn vị</a>
 </div>
 
 <table class="table">
@@ -25,9 +25,9 @@
             <td>{{ 'Cấp 1' if unit.IsParent else 'Cấp 2' }}</td>
             <td>{{ unit.parent.TenDonVi if unit.parent else '-' }}</td>
             <td>
-                <a href="{{ url_for('admin_edit_unit', unit_id=unit.IDDonVi) }}">Sửa</a>
+                <a href="{{ url_for('edit_unit', id=unit.IDDonVi) }}">Sửa</a>
                 |
-                <form method="post" action="{{ url_for('admin_delete_unit', unit_id=unit.IDDonVi) }}" style="display:inline;">
+                <form method="post" action="{{ url_for('delete_unit', id=unit.IDDonVi) }}" style="display:inline;">
                     <button type="submit" onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</button>
                 </form>
             </td>
