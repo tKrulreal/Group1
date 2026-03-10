@@ -3,49 +3,36 @@
 
 {% block content %}
 <div class="admin-head">
-    <div>
-        <h1 style="margin:0;color:#0d47a1;">Quản lý danh sách đơn vị</h1>
-        <p class="page-note">Thêm, chỉnh sửa và xóa các đơn vị cấp 1, cấp 2 trong hệ thống.</p>
-    </div>
+    <h1>Quản lý danh sách đơn vị</h1>
     <a class="btn" href="{{ url_for('create_unit') }}">+ Thêm đơn vị</a>
 </div>
 
-<div class="table-wrap">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Tên đơn vị</th>
-                <th>Phân cấp</th>
-                <th>Thuộc đơn vị cấp 1</th>
-                <th>Thao tác</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for unit in units %}
-            <tr>
-                <td>{{ unit.IDDonVi }}</td>
-                <td>
-                    <strong>{{ unit.TenDonVi }}</strong><br>
-                    <span class="page-note">{{ unit.Email or 'Chưa có email' }}</span>
-                </td>
-                <td>
-                    {% if unit.IsParent %}
-                        <span class="badge badge-parent">Đơn vị cấp 1</span>
-                    {% else %}
-                        <span class="badge badge-child">Đơn vị cấp 2</span>
-                    {% endif %}
-                </td>
-                <td>{{ unit.parent.TenDonVi if unit.parent else '-' }}</td>
-                <td>
-                    <a class="action-link" href="{{ url_for('edit_unit', id=unit.IDDonVi) }}">Sửa</a>
-                    <form method="post" action="{{ url_for('delete_unit', id=unit.IDDonVi) }}" style="display:inline-block; margin-left:10px;">
-                        <button class="delete-btn" type="submit" onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên đơn vị</th>
+            <th>Cấp</th>
+            <th>Thuộc đơn vị cấp 1</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for unit in units %}
+        <tr>
+            <td>{{ unit.IDDonVi }}</td>
+            <td>{{ unit.TenDonVi }}</td>
+            <td>{{ 'Cấp 1' if unit.IsParent else 'Cấp 2' }}</td>
+            <td>{{ unit.parent.TenDonVi if unit.parent else '-' }}</td>
+            <td>
+                <a href="{{ url_for('edit_unit', id=unit.IDDonVi) }}">Sửa</a>
+                |
+                <form method="post" action="{{ url_for('delete_unit', id=unit.IDDonVi) }}" style="display:inline;">
+                    <button type="submit" onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}
