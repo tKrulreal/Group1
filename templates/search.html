@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Tìm kiếm{% endblock %}
+
+{% block content %}
+
+
+{% if q %}
+    <h2>Kết quả với từ khóa: "{{ q }}"</h2>
+
+    {% if results %}
+        <div class="grid">
+            {% for unit in results %}
+                <div class="card">
+                    <h3>{{ unit.TenDonVi }}</h3>
+                    <p><strong>Cấp:</strong> {{ 'Cấp 1' if unit.IsParent else 'Cấp 2' }}</p>
+                    <p><strong>Địa điểm:</strong> {{ unit.DiaDiem or 'Chưa cập nhật' }}</p>
+
+                    {% if unit.IsParent %}
+                        <a class="btn" href="{{ url_for('parent_detail', id=unit.IDDonVi) }}">Xem đơn vị con</a>
+                    {% else %}
+                        <a class="btn" href="{{ url_for('unit_detail', id=unit.IDDonVi) }}">Xem chi tiết</a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Không tìm thấy kết quả phù hợp.</p>
+    {% endif %}
+{% endif %}
+{% endblock %}

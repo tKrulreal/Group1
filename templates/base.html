@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Quản lý đơn vị NEU{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container nav">
+            <a href="{{ url_for('index') }}" class="logo">NEU Units</a>
+
+            <nav class="menu">
+                <a href="{{ url_for('index') }}">Trang chủ</a>
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('admin_units') }}">Quản trị</a>
+                    <a href="{{ url_for('logout') }}">Đăng xuất</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}">Đăng nhập Admin</a>
+                {% endif %}
+            </nav>
+        </div>
+
+        <div class="container search-bar">
+            <form action="{{ url_for('search') }}" method="get" class="search-form">
+                <input type="text" name="q" placeholder="Tìm theo tên, địa điểm, email, website..." value="{{ request.args.get('q', '') }}">
+                <button type="submit">Tìm kiếm</button>
+            </form>
+        </div>
+    </header>
+    <div class="container">
+    <div class="menu" style="margin-top: 12px;">
+        {% for p in menu_parent_units %}
+            <a href="{{ url_for('parent_detail', id=p.IDDonVi) }}">{{ p.TenDonVi }}</a>
+        {% endfor %}
+    </div>
+</div>
+
+    <main class="container">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for msg in messages %}
+                    <div class="flash">{{ msg }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

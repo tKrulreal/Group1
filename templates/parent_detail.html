@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}{{ parent.TenDonVi }}{% endblock %}
+
+{% block content %}
+<div class="detail-box">
+    <h1>{{ parent.TenDonVi }}</h1>
+    <p><strong>Địa điểm:</strong> {{ parent.DiaDiem or 'Chưa cập nhật' }}</p>
+    <p><strong>Email:</strong> {{ parent.Email or 'Chưa cập nhật' }}</p>
+    <p><strong>Điện thoại:</strong> {{ parent.DienThoai or 'Chưa cập nhật' }}</p>
+    <p><strong>Mô tả:</strong> {{ parent.MoTa or 'Chưa có mô tả' }}</p>
+
+    <div class="back-links">
+        <a class="btn" href="{{ url_for('index') }}">← Về trang chủ</a>
+        <a class="btn" href="{{ url_for('search') }}">Tìm kiếm</a>
+    </div>
+</div>
+
+<h2>Danh sách đơn vị cấp 2 trực thuộc</h2>
+<div class="grid">
+    {% for child in children %}
+        <div class="card">
+            <h3>{{ child.TenDonVi }}</h3>
+            <p>{{ child.DiaDiem or 'Chưa cập nhật địa điểm' }}</p>
+            <a class="btn" href="{{ url_for('unit_detail', id=child.IDDonVi) }}">Xem chi tiết</a>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

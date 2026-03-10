@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ unit.TenDonVi }}
+{% endblock %}
+
+{% block content %}
+<div class="detail-box">
+    <h1>{{ unit.TenDonVi }}</h1>
+
+    {% if mode == 'child' and unit.parent %}
+        <p><strong>Thuộc đơn vị cấp 1:</strong> {{ unit.parent.TenDonVi }}</p>
+    {% endif %}
+
+    <p><strong>Địa điểm:</strong> {{ unit.DiaDiem or 'Chưa cập nhật' }}</p>
+    <p><strong>Email:</strong> {{ unit.Email or 'Chưa cập nhật' }}</p>
+    <p><strong>Điện thoại:</strong> {{ unit.DienThoai or 'Chưa cập nhật' }}</p>
+    <p><strong>Website:</strong>
+        {% if unit.Website %}
+            <a href="{{ url_for('go_website', unit_id=unit.IDDonVi) }}" target="_blank">Truy cập website</a>
+        {% else %}
+            Chưa cập nhật
+        {% endif %}
+    </p>
+    <p><strong>Mô tả:</strong> {{ unit.MoTa or 'Chưa có mô tả' }}</p>
+</div>
+
+{% if mode == 'parent' %}
+    <h2>Danh sách đơn vị cấp 2 trực thuộc</h2>
+
+    {% if children %}
+        <div class="grid">
+            {% for child in children %}
+                <div class="card">
+                    <h3>{{ child.TenDonVi }}</h3>
+                    <p>{{ child.DiaDiem or 'Chưa cập nhật địa điểm' }}</p>
+                    <a class="btn" href="{{ url_for('unit_detail', unit_id=child.IDDonVi) }}">
+                        Xem thông tin
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Chưa có đơn vị cấp 2 thuộc đơn vị này.</p>
+    {% endif %}
+{% endif %}
+{% endblock %}

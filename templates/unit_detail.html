@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}{{ unit.TenDonVi }}{% endblock %}
+
+{% block content %}
+<div class="detail-box">
+    <h1>{{ unit.TenDonVi }}</h1>
+
+    {% if unit.parent %}
+        <p><strong>Thuộc đơn vị cấp 1:</strong> {{ unit.parent.TenDonVi }}</p>
+    {% endif %}
+
+    <p><strong>Địa điểm:</strong> {{ unit.DiaDiem or 'Chưa cập nhật' }}</p>
+    <p><strong>Email:</strong> {{ unit.Email or 'Chưa cập nhật' }}</p>
+    <p><strong>Điện thoại:</strong> {{ unit.DienThoai or 'Chưa cập nhật' }}</p>
+    <p><strong>Mô tả:</strong> {{ unit.MoTa or 'Chưa có mô tả' }}</p>
+
+    <p>
+        <strong>Website:</strong>
+        {% if unit.Website %}
+            <a href="{{ url_for('go_website', id=unit.IDDonVi) }}" target="_blank">Truy cập website</a>
+        {% else %}
+            Chưa cập nhật
+        {% endif %}
+    </p>
+
+    <div class="back-links">
+        <a class="btn" href="{{ url_for('index') }}">← Về trang chủ</a>
+        {% if unit.parent %}
+            <a class="btn" href="{{ url_for('parent_detail', id=unit.parent.IDDonVi) }}">Về đơn vị cấp 1</a>
+        {% endif %}
+        <a class="btn" href="{{ url_for('search') }}">Tìm kiếm</a>
+    </div>
+</div>
+{% endblock %}

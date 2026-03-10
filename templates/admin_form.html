@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ 'Sửa đơn vị' if unit else 'Thêm đơn vị' }}
+{% endblock %}
+
+{% block content %}
+<div class="form-box">
+    <h1>{{ 'Sửa đơn vị' if unit else 'Thêm đơn vị' }}</h1>
+
+    <form method="post">
+        <label>Tên đơn vị</label>
+        <input type="text" name="ten_don_vi" value="{{ unit.TenDonVi if unit else '' }}" required>
+
+        <label>Địa điểm</label>
+        <input type="text" name="dia_diem" value="{{ unit.DiaDiem if unit else '' }}">
+
+        <label>Website</label>
+        <input type="text" name="website" value="{{ unit.Website if unit else '' }}">
+
+        <label>Email</label>
+        <input type="email" name="email" value="{{ unit.Email if unit else '' }}">
+
+        <label>Điện thoại</label>
+        <input type="text" name="dien_thoai" value="{{ unit.DienThoai if unit else '' }}">
+
+        <label>Mô tả</label>
+        <textarea name="mo_ta">{{ unit.MoTa if unit else '' }}</textarea>
+
+        <label>Là đơn vị cấp 1?</label>
+        <select name="is_parent">
+            <option value="yes" {% if unit and unit.IsParent %}selected{% endif %}>Yes</option>
+            <option value="no" {% if unit and not unit.IsParent %}selected{% endif %}>No</option>
+        </select>
+
+        <label>Thuộc đơn vị cấp 1 nào</label>
+        <select name="parent_id">
+            <option value="">-- Chọn đơn vị cấp 1 --</option>
+            {% for p in parent_units %}
+                <option value="{{ p.IDDonVi }}"
+                    {% if unit and unit.ParentID == p.IDDonVi %}selected{% endif %}>
+                    {{ p.TenDonVi }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Lưu</button>
+    </form>
+</div>
+{% endblock %}

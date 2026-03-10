@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Trang chủ{% endblock %}
+
+{% block content %}
+
+
+<h2 id="parent-list">Danh sách đơn vị cấp 1</h2>
+<div class="grid">
+    {% for unit in parent_units %}
+        <div class="card">
+            <h3>{{ unit.TenDonVi }}</h3>
+            <p>{{ unit.DiaDiem or 'Chưa cập nhật địa điểm' }}</p>
+            <a class="btn" href="{{ url_for('parent_detail', id=unit.IDDonVi) }}">
+                Xem đơn vị cấp 2
+            </a>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
