@@ -2,17 +2,22 @@
 {% block title %}Tìm kiếm{% endblock %}
 
 {% block content %}
-
+<div class="detail-box">
+    <h1>Tìm kiếm đơn vị</h1>
+    <p class="page-note">
+        Tìm theo tên, địa điểm, email, website, điện thoại hoặc mô tả của đơn vị.
+    </p>
+</div>
 
 {% if q %}
-    <h2>Kết quả với từ khóa: "{{ q }}"</h2>
+    <h2 class="section-title">Kết quả với từ khóa: "{{ q }}"</h2>
 
     {% if results %}
         <div class="grid">
             {% for unit in results %}
                 <div class="card">
                     <h3>{{ unit.TenDonVi }}</h3>
-                    <p><strong>Cấp:</strong> {{ 'Cấp 1' if unit.IsParent else 'Cấp 2' }}</p>
+                    <p><strong>Phân cấp:</strong> {{ 'Cấp 1' if unit.IsParent else 'Cấp 2' }}</p>
                     <p><strong>Địa điểm:</strong> {{ unit.DiaDiem or 'Chưa cập nhật' }}</p>
 
                     {% if unit.IsParent %}
@@ -24,7 +29,15 @@
             {% endfor %}
         </div>
     {% else %}
-        <p>Không tìm thấy kết quả phù hợp.</p>
+        <div class="empty-box">
+            <h3>Không tìm thấy kết quả phù hợp</h3>
+            <p>Hãy thử lại với từ khóa ngắn hơn hoặc chính xác hơn.</p>
+        </div>
     {% endif %}
+{% else %}
+    <div class="empty-box">
+        <h3>Chưa nhập từ khóa tìm kiếm</h3>
+        <p>Hãy nhập nội dung vào ô tìm kiếm phía trên.</p>
+    </div>
 {% endif %}
 {% endblock %}

@@ -6,26 +6,27 @@
 
 {% block content %}
 <div class="form-box">
-    <h1>{{ 'Sửa đơn vị' if unit else 'Thêm đơn vị' }}</h1>
+    <h1>{{ 'Sửa đơn vị' if unit else 'Thêm đơn vị mới' }}</h1>
+    <p class="page-note">Điền đầy đủ thông tin để đơn vị hiển thị rõ ràng trên hệ thống.</p>
 
     <form method="post">
         <label>Tên đơn vị</label>
-        <input type="text" name="ten_don_vi" value="{{ unit.TenDonVi if unit else '' }}" required>
+        <input type="text" name="ten_don_vi" value="{{ unit.TenDonVi if unit else '' }}" placeholder="Ví dụ: Khoa Công nghệ thông tin" required>
 
         <label>Địa điểm</label>
-        <input type="text" name="dia_diem" value="{{ unit.DiaDiem if unit else '' }}">
+        <input type="text" name="dia_diem" value="{{ unit.DiaDiem if unit else '' }}" placeholder="Ví dụ: Tầng 3, Nhà A1">
 
         <label>Website</label>
-        <input type="text" name="website" value="{{ unit.Website if unit else '' }}">
+        <input type="text" name="website" value="{{ unit.Website if unit else '' }}" placeholder="Ví dụ: fit.neu.edu.vn">
 
         <label>Email</label>
-        <input type="email" name="email" value="{{ unit.Email if unit else '' }}">
+        <input type="email" name="email" value="{{ unit.Email if unit else '' }}" placeholder="Ví dụ: fit@neu.edu.vn">
 
         <label>Điện thoại</label>
-        <input type="text" name="dien_thoai" value="{{ unit.DienThoai if unit else '' }}">
+        <input type="text" name="dien_thoai" value="{{ unit.DienThoai if unit else '' }}" placeholder="Ví dụ: 0243xxxxxxx">
 
         <label>Mô tả</label>
-        <textarea name="mo_ta">{{ unit.MoTa if unit else '' }}</textarea>
+        <textarea name="mo_ta" placeholder="Nhập mô tả ngắn về đơn vị">{{ unit.MoTa if unit else '' }}</textarea>
 
         <label>Là đơn vị cấp 1?</label>
         <select name="is_parent">
@@ -44,7 +45,10 @@
             {% endfor %}
         </select>
 
-        <button type="submit">Lưu</button>
+        <div class="back-links">
+            <button type="submit">Lưu thông tin</button>
+            <a class="btn" href="{{ url_for('admin_units') }}">Quay lại quản trị</a>
+        </div>
     </form>
 </div>
 {% endblock %}
