@@ -2,18 +2,34 @@
 {% block title %}Trang chủ{% endblock %}
 
 {% block content %}
+<div class="hero">
+    <h1>Hệ thống quản lý và tìm kiếm đơn vị thuộc NEU</h1>
+    <p>
+        Website hỗ trợ tra cứu thông tin các phòng ban, trường, viện, khoa và đơn vị trực thuộc
+        Trường Đại học Kinh tế Quốc dân. Người dùng có thể tìm kiếm nhanh, xem danh sách đơn vị cấp 1,
+        duyệt các đơn vị cấp 2 và truy cập website chính thức của từng đơn vị.
+    </p>
+</div>
 
+<h2 class="section-title" id="parent-list">Danh sách đơn vị cấp 1</h2>
 
-<h2 id="parent-list">Danh sách đơn vị cấp 1</h2>
+{% if parent_units %}
 <div class="grid">
     {% for unit in parent_units %}
         <div class="card">
             <h3>{{ unit.TenDonVi }}</h3>
-            <p>{{ unit.DiaDiem or 'Chưa cập nhật địa điểm' }}</p>
+            <p><strong>Địa điểm:</strong> {{ unit.DiaDiem or 'Chưa cập nhật địa điểm' }}</p>
+            <p><strong>Email:</strong> {{ unit.Email or 'Chưa cập nhật' }}</p>
             <a class="btn" href="{{ url_for('parent_detail', id=unit.IDDonVi) }}">
                 Xem đơn vị cấp 2
             </a>
         </div>
     {% endfor %}
 </div>
+{% else %}
+<div class="empty-box">
+    <h3>Chưa có dữ liệu đơn vị cấp 1</h3>
+    <p>Hãy đăng nhập quản trị để thêm dữ liệu ban đầu.</p>
+</div>
+{% endif %}
 {% endblock %}
